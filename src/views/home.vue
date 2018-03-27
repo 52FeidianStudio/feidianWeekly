@@ -8,10 +8,7 @@
 		<div class="home">
 			<div class="content">
 				<ul>
-					<blogItem></blogItem>
-					<blogItem></blogItem>
-					<blogItem></blogItem>
-					<blogItem></blogItem>
+					<blogItem v-for="item in blogs" :blog="item" :key="item._id"></blogItem>
 				</ul>
 			</div>
 
@@ -33,8 +30,21 @@ export default {
 	},
 	data() {
 		return {
-
+			blogs: [],
+			api: 'http://norma0119.cn:3000/api/todo_all'
 		}
+	},
+
+	methods: {
+		getBlogs() {
+			this.$http.get(this.api).then((response) => {
+				this.blogs = response.data;
+			})
+		}
+	},
+
+	mounted() {
+		this.getBlogs();
 	}
 }
 </script>
